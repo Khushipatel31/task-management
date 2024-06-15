@@ -4,7 +4,7 @@ function errorHandler(err, req, res, next) {
 
     err.httpStatusCode = err.httpStatusCode || 500;
     err.message = err.message || "Internal error";
-
+console.log("middle")
     //wrong mongodb id error
     if (err.name == "CastError") {
         const message = `Resource not found. Invalid: ${err.path} `;
