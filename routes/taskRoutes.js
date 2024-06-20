@@ -7,6 +7,7 @@ router
   .route("/tasks")
   .post(taskController.addTask)
   .get(taskController.getTasks);
+router.route("/getMyTasks").get(isAuthenticatedUser,taskController.getMyTasks)
 router
   .route("/tasks/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), taskController.updateTask)

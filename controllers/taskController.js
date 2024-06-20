@@ -4,14 +4,16 @@ const catchAsyncErrors = require("../middleware/catchAsyncError");
 
 //adding new task
 const addTask = catchAsyncErrors(async (req, res, next) => {
-    const { title, description } = req.body;
-    if (!title || !description) {
+    const { title, description,userId,deadline } = req.body;
+    if (!title || !description|| !userId) {
         return next(new CustomHttpError(400, "Please enter all data"));
     }
     try {
         const task = await tasks.create({
             title,
-            description
+            description,
+            assignedTo: userId, 
+            deadline 
         });
         res.status(201).json({ message: "Task created successfully", task });
     } catch (error) {
@@ -68,6 +70,15 @@ const getTasks = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+const getMyTasks = catchAsyncErrors(async (req, res, next) => {
+    const allTasks = await tasks.find({assignedTo:req.user._id});
+    res.status(200).json({
+        success: true,
+        count: allTasks.length,
+        tasks: allTasks
+    });
+});
+
 
 const updateStatus = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
@@ -90,5 +101,6 @@ module.exports = {
     getTasks,
     updateTask,
     deleteTask,
-    updateStatus
+    updateStatus,
+    getMyTasks
 };
