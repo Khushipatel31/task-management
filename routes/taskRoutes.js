@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const taskController = require("../controllers/taskController");
-const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const { isAuthenticatedUser, authorizeRoles,verify } = require("../middleware/auth");
+
+
+router.route("/verify").get(isAuthenticatedUser,verify);
 
 router
   .route("/tasks")

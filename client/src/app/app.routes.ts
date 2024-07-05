@@ -1,53 +1,51 @@
-import { Routes } from '@angular/router';
+import { Routes, RouterModule,CanActivate } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent as adminDashboard } from './modules/admin/components/dashboard/dashboard.component';
-import { DashboardComponent as userDashboard } from './modules/users/components/dashboard/dashboard.component';
-
-
+import { DashboardComponent as AdminDashboard } from './modules/admin/components/dashboard/dashboard.component';
+import { DashboardComponent as UserDashboard } from './modules/users/components/dashboard/dashboard.component';
+import {AuthGuard} from './guards/auth.guard'
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    component: AdminDashboard,
+    children: [
+      {
         path: '',
-        redirectTo: '/login',
-        pathMatch: 'full',
+        component: AdminDashboard,
       },
+    ],
+  },
+  {
+    path: 'user',
+    component: UserDashboard,
+    children: [
       {
-        path: 'login',
-        component: LoginComponent,
+        path: '',
+        component: UserDashboard,
       },
-      {
-        path:'register',
-        component:RegisterComponent
-      },
-      {
-        path: 'admin',
-        component: adminDashboard,
-        children: [
-          {
-            path: '',
-            component:adminDashboard ,
-          },
-          {
-            path: '',
-            redirectTo: '/admin/dashboard',
-            pathMatch: 'full',
-          },
-        ],
-      },
-      {
-        path: 'user',
-        component: userDashboard,
-        children: [
-          {
-            path: '',
-            component:userDashboard ,
-          },
-          {
-            path: '',
-            redirectTo: '/user/dashboard',
-            pathMatch: 'full',
-          },
-        ],
-      },
-   
+      
+    ],
+  },
+  { path: '**', redirectTo: '' },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
