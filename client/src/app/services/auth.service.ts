@@ -6,7 +6,11 @@ import { Injectable } from '@angular/core';
 interface login {
   email: String;
   password: String;
-  role: String;
+}
+interface register {
+  email: String;
+  password: String;
+  username: String;
 }
 
 @Injectable({
@@ -17,18 +21,26 @@ export class AuthService {
 
   login(data: login): Observable<any> {
     return this.http.postMethod('/login', data).pipe(
-      map((data:any)=>{
-        if(data.success){
+      map((data: any) => {
+        if (data.success) {
           this.setToken(data.token);
           this.setRole(data.user.role);
           return data;
-        }else{
+        } else {
           return data;
         }
       })
     );
   }
 
+  register(data: register): Observable<any> {
+    return this.http.postMethod('/register',data).pipe(
+      map((data: any) => {
+        console.log(data)
+        return data;
+      })
+    )
+  }
 
   verify(): Observable<boolean> {
     return this.http.getMethod('/verify').pipe(
@@ -41,20 +53,17 @@ export class AuthService {
     );
   }
 
-  setToken(token:string){
-    localStorage.setItem('token',token);
+  setToken(token: string) {
+    localStorage.setItem('token', token);
   }
-  setRole(role:string){
-    localStorage.setItem('role',role);
+  setRole(role: string) {
+    localStorage.setItem('role', role);
   }
 
-  getRole(){
+  getRole() {
     return localStorage.getItem('role');
   }
-  getToken(){
-   return  localStorage.getItem('token')
+  getToken() {
+    return localStorage.getItem('token');
   }
-
-
-
 }

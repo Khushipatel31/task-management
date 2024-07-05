@@ -6,6 +6,10 @@ const { CustomHttpError } = require("../utils/customError");
 
 const registerUser = catchAsyncErrors(async (req, res, next) => {
     const { name, email, password } = req.body;
+    const userCheck = await Users.findOne({ email });
+    if (userCheck) {
+        return next(new CustomHttpError(400, "Email already exists"));
+    }
     const user = await Users.create({
         name,
         email,
@@ -17,7 +21,7 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
 const loginUser = catchAsyncErrors(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        return next(new CustomHttpError( 400,"Please provide email and password"));
+        return next(new CustomHttpError(400, "Please provide email and password"));
     }
     const user = await Users.findOne({ email }).select("+password");
     if (!user) {

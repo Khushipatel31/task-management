@@ -1,46 +1,49 @@
 <div class="flex justify-center items-center h-screen bg-gray-100">
     <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <div class="text-3xl text-center  font-semibold mb-6 text-fuchsia-950">Register</div>
-        <div class="space-y-4">
-            <div>
-                <label htmlFor="username" class="block text-sm font-medium text-gray-600">
-                    username
-                </label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter your username"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
-                />
+        <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+            <div class="space-y-4">
+                <div>
+                    <label htmlFor="username" class="block text-sm font-medium text-gray-600">
+                        Username
+                    </label>
+                    <input [ngClass]="{
+                        'border-red-500':
+                          registerForm.get('username')?.errors &&
+                          (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)
+                      }" formControlName="name" type="text" id="username" placeholder="Enter your username"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300" />
+                </div>
+                <div>
+                    <label htmlFor="email" class="block text-sm font-medium text-gray-600">
+                        Email
+                    </label>
+                    <input formControlName="email" type="text" id="email" placeholder="Enter your username"
+                        [ngClass]="{
+                        'border-red-500':
+                          registerForm.get('email')?.errors &&
+                          (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)
+                      }"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300" />
+                </div>
+                <div>
+                    <label htmlFor="password" class="block text-sm font-medium text-gray-600">
+                        Password
+                    </label>
+                    <input [ngClass]="{
+                        'border-red-500':
+                          registerForm.get('password')?.errors &&
+                          (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)
+                      }" formControlName="password" type="password" placeholder="Enter your password"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 " />
+                </div>
+                <div class="text-red-600 text-center" *ngIf="error.length > 0">{{error}}</div>
+                <button
+                    class="w-full py-2 px-4 bg-fuchsia-950 text-white rounded-md hover:bg-white hover:text-fuchsia-950 hover:border-fbg-fuchsia-950 hover:border-1 focus:outline-none focus:ring focus:border-blue-300">Register</button>
+                <div class="text-end text-fbg-fuchsia-950 font-medium">
+                    <a href="/login">Login</a>
+                </div>
             </div>
-            <div>
-                <label htmlFor="email" class="block text-sm font-medium text-gray-600">
-                    Email
-                </label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter your username"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
-                />
-            </div>
-            <div>
-                <label htmlFor="password" class="block text-sm font-medium text-gray-600">
-                    Password
-                </label>
-                <input
-                    type="password"
-                    placeholder="Enter your password"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 "
-                />
-            </div>
-            <!-- <div class="text-red-600 text-center">Error</div> -->
-            <button
-                class="w-full py-2 px-4 bg-fuchsia-950 text-white rounded-md hover:bg-white hover:text-fuchsia-950 hover:border-fbg-fuchsia-950 hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
-            >Register</button>
-            <div class="text-end text-fbg-fuchsia-950 font-medium">
-                <a href="/login" >Login</a>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
