@@ -5,8 +5,8 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 router
   .route("/tasks")
-  .post(taskController.addTask)
-  .get(taskController.getTasks);
+  .post(isAuthenticatedUser,authorizeRoles("admin"),taskController.addTask)
+  .get(isAuthenticatedUser,taskController.getTasks);
 router.route("/getMyTasks").get(isAuthenticatedUser,taskController.getMyTasks)
 router
   .route("/tasks/:id")
