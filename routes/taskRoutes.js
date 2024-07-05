@@ -4,8 +4,6 @@ const taskController = require("../controllers/taskController");
 const { isAuthenticatedUser, authorizeRoles,verify } = require("../middleware/auth");
 
 
-router.route("/verify").get(isAuthenticatedUser,verify);
-
 router
   .route("/tasks")
   .post(isAuthenticatedUser,authorizeRoles("admin"),taskController.addTask)

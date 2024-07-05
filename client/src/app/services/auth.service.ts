@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   verify(): Observable<boolean> {
-    return this.http.getMethod('/verify').pipe(
+    return this.http.getMethod('/'+localStorage.getItem('role')+'/verify').pipe(
       map((data: any) => {
         return true;
       }),
