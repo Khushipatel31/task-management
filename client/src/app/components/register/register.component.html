@@ -1,15 +1,25 @@
 <div class="flex justify-center items-center h-screen bg-gray-100">
     <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <div class="text-3xl text-center  font-semibold mb-6 text-fuchsia-950">LOGIN</div>
+        <div class="text-3xl text-center  font-semibold mb-6 text-fuchsia-950">Register</div>
         <div class="space-y-4">
-           
+            <div>
+                <label htmlFor="username" class="block text-sm font-medium text-gray-600">
+                    username
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter your username"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
+                />
+            </div>
             <div>
                 <label htmlFor="email" class="block text-sm font-medium text-gray-600">
                     Email
                 </label>
                 <input
                     type="text"
-                    id="email"
+                    id="username"
                     placeholder="Enter your username"
                     class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
                 />
@@ -27,9 +37,9 @@
             <!-- <div class="text-red-600 text-center">Error</div> -->
             <button
                 class="w-full py-2 px-4 bg-fuchsia-950 text-white rounded-md hover:bg-white hover:text-fuchsia-950 hover:border-fbg-fuchsia-950 hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
-            >Login</button>
+            >Register</button>
             <div class="text-end text-fbg-fuchsia-950 font-medium">
-                <a href="/register" >Register</a>
+                <a href="/login" >Login</a>
             </div>
         </div>
     </div>
