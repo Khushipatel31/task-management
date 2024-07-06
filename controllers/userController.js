@@ -34,6 +34,14 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
+const getUsers=catchAsyncErrors(async(req,res,next)=>{
+    const allUsers=await Users.find({role:{$ne:"admin"}});
+    res.status(200).json({
+        success: true,
+        allUsers
+    });
+})
+
 const logOut = catchAsyncErrors(async (req, res, next) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
@@ -46,8 +54,11 @@ const logOut = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+
+
 module.exports = {
     registerUser,
     loginUser,
-    logOut
+    logOut,
+    getUsers
 }

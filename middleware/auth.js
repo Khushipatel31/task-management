@@ -4,21 +4,19 @@ const { CustomHttpError } = require("../utils/customError");
 const jwt = require("jsonwebtoken");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
-  const token = req.headers.token;
+  // const token = req.headers.token;
+  const token = req.cookies.token;
   if (!token) {
     return next(new CustomHttpError(401, "Please login to access resources"));
   }
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(decodedData.id);
-  if (req.user.role != req.headers.role) {
-    return next(new CustomHttpError(401, "User is not authorised"));
-  }
+  
   next();
 });
 
 exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
-   
     if (!roles.includes(req.user.role)) {
       return next(new CustomHttpError(403, `${req.user.role} is not authorized to perform this action`));
     }
@@ -27,6 +25,7 @@ exports.authorizeRoles = (...roles) => {
 };
 
 exports.verify = (async (req, res) => {
+  console.log(req.user)
   res.json({
     success: true,
     data: req.user

@@ -3,7 +3,10 @@ const userController = require('../controllers/userController.js');
 const{authorizeRoles,isAuthenticatedUser,verify} =require ("../middleware/auth.js");
 const router=express.Router();
 
+
 router.route("/admin/verify").get(isAuthenticatedUser,authorizeRoles("admin"),verify);
+router.route("/admin/users").get(isAuthenticatedUser,authorizeRoles("admin"),userController.getUsers);
+
 router.route("/user/verify").get(isAuthenticatedUser,authorizeRoles("user"),verify);
 router.route("/register").post(userController.registerUser);
 router.route("/login").post(userController.loginUser);
