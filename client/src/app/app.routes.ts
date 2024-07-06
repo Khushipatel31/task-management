@@ -34,13 +34,8 @@ export const routes: Routes = [
     path: 'user',
     component: UserDashboard,
     canActivate: [AuthGuard('user')],
-    children: [
-      {
-        path: '',
-        component: UserDashboard,
-      },
-      
-    ],
+    loadChildren:()=>
+      import('./modules/users/user.module').then((m)=>m.UserModule)
   },
   { path: '**', redirectTo: '' },
 ];

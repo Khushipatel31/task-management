@@ -36,7 +36,6 @@ export class AuthService {
   register(data: register): Observable<any> {
     return this.http.postMethod('/register',data).pipe(
       map((data: any) => {
-        console.log(data)
         return data;
       })
     )
