@@ -1,5 +1,40 @@
 <app-header></app-header>
-<div class="flex items-center w-full h-[20vh] justify-center ">
 
-    <app-task-data-table></app-task-data-table>
+
+<!-- <div class="flex items-center justify-center">
+    <mat-form-field appearance="fill">
+        <mat-label>Select Task Type</mat-label>
+        <mat-select  value="pending"  (selectionChange)="onTaskTypeChange($event)">
+          <mat-option value="pending">Pending</mat-option>
+          <mat-option value="completed">Completed</mat-option>
+          <mat-option value="expired">Expired</mat-option>
+        </mat-select>
+      </mat-form-field>
+</div> -->
+
+
+<div class="w-full justify-center items-center my-[8vh] gap-10   flex h-[30vh]">
+  <div class="h-[30vh] w-[40vh]  p-4 m-3 flex flex-col rounded-md justify-center border shadow-md items-center">
+    <span class="text-2xl font-medium ">Completed</span>
+    <span class="text-2xl py-2">{{completedTasks.length}}</span>
+  </div>
+  <div class="h-[30vh] w-[40vh]  p-4 m-3 flex flex-col rounded-md justify-center border shadow-md items-center">
+    <span class="text-2xl font-medium ">Pending</span>
+    <span class="text-2xl py-2">{{pendingTasks.length}}</span>
+  </div>
+  <div class="h-[30vh] w-[40vh]  p-4 m-3 flex flex-col rounded-md justify-center border shadow-md items-center">
+    <span class="text-2xl font-medium ">Expired</span>
+    <span class="text-2xl py-2">{{expiredTasks.length}}</span>
+  </div>
+
 </div>
+
+<select (change)="onStatusChange($event)">
+  <option value="pending">Pending</option>
+  <option value="completed">Completed</option>
+  <option value="expired">Expired</option>
+</select>
+
+<ag-grid-angular class="ag-theme-quartz" [pagination]="pagination" [paginationPageSize]="paginationPageSize"
+  [paginationPageSizeSelector]="paginationPageSizeSelector" style="height: 10rem;" [rowData]="rowData"
+  [columnDefs]="colDefs" />

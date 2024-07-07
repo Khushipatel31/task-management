@@ -11,13 +11,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './guards/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
@@ -27,13 +25,10 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     HttpClientModule,
     CommonModule,
+    MatSelectModule,
     MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    MatSelectModule
+    MatFormFieldModule
   ],
   providers: [
     AuthService,
@@ -41,6 +36,5 @@ import { MatSelectModule } from '@angular/material/select';
     provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
- 
 })
 export class AppModule {}

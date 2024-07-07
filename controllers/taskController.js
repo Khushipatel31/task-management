@@ -99,7 +99,7 @@ const getMyTasks = catchAsyncErrors(async (req, res, next) => {
 const adminGetTasks = catchAsyncErrors(async (req, res, next) => {
     let id = new mongoose.Types.ObjectId(req.user.id);
     const allTasks = await tasks.find({
-        assignedTo: { $ne: req.user.id }
+        // assignedTo: { $ne: req.user.id }
     }).populate("assignedTo");
 
     let pendingCount = 0;

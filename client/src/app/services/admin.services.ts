@@ -16,19 +16,20 @@ interface Task {
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  constructor(private http: HttpServices) {}
+export class AdminServices {
   nameSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  // name: String = '';
+  constructor(private http: HttpServices) {}
 
-  updateUserName(name:String){
-    this.nameSubject.next(name);
+  updateName(newData: any): void {
+    this.nameSubject.next(newData);
   }
 
   getTasks() {
-    return this.http.getMethod('/getMyTasks').pipe(
-        map((data:any)=>{
-            return data;
-        }
-    ));
+    return this.http.getMethod('/admin/tasks').pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 }
