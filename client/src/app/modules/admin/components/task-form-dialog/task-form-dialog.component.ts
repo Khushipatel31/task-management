@@ -12,6 +12,8 @@ export class TaskFormDialogComponent implements OnInit {
   data: Object = {};
   id: string = '';
   users: any = [];
+  loading:Boolean=false;
+  error:string=''
   constructor(private adminServices: AdminServices) {}
   ngOnInit(): void {
     this.adminServices.getUsers().subscribe((data) => {

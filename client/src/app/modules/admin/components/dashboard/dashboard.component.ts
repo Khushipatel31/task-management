@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit{
   }
 
   createTask(){
-      this.dialog.open(TaskFormDialogComponent,{ width: '250px', data: '' });
+      this.dialog.open(TaskFormDialogComponent,{ width: '600px',height:'600 px', data: '' });
   }
 
 }

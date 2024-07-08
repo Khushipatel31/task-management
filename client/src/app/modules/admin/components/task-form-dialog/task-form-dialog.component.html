@@ -1,14 +1,53 @@
-<!-- <form class="example-form">
-  <mat-label>Email</mat-label>
-    <mat-form-field class="example-full-width">
-      <input type="email" matInput 
-             placeholder="Ex. pat@example.com">
-      <mat-hint>Errors appear instantly!</mat-hint>
-      @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-        <mat-error>Please enter a valid email address</mat-error>
-      }
-      @if (emailFormControl.hasError('required')) {
-        <mat-error>Email is <strong>required</strong></mat-error>
-      }
-    </mat-form-field>
-  </form> -->
+<div class="flex justify-center items-center py-16 bg-gray-100">
+  <div class="w-full max-w-md p-6 bg-white rounded-lg  shadow-md">
+    <div class="text-3xl text-center text-darkBlue font-semibold mb-6">Task Form</div>
+    <form class="space-y-4">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-600">Title</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          placeholder="Enter task title"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-600">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter task description"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
+        ></textarea>
+      </div>
+      <div>
+        <label for="user" class="block text-sm font-medium text-gray-600">Select User</label>
+        <select
+          id="user"
+          formControlName="user"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
+        >
+          <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="deadline" class="block text-sm font-medium text-gray-600">Deadline</label>
+        <input
+          type="date"
+          id="deadline"
+          formControlName="deadline"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
+        />
+      </div>
+      <div class="text-red-600 text-center" *ngIf="error">{{ error }}</div>
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="w-full py-2 px-4 bg-darkBlue text-white rounded-md hover:bg-white hover:text-darkBlue hover:border-darkBlue hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
+      >
+        {{ loading ? 'Submitting...' : 'Submit' }}
+      </button>
+    </form>
+  </div>
+</div>

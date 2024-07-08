@@ -21,7 +21,7 @@ export class ActionbuttonsComponent {
   }
 
   edit() {
-    this.dialog.open(TaskFormDialogComponent, { width: '250px', data: '' });
+    this.dialog.open(TaskFormDialogComponent, { width: '100px', data: '' });
   }
 
   delete() {
