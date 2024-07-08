@@ -9,9 +9,9 @@ import { TaskFormDialogComponent } from '../../../modules/admin/components/task-
   templateUrl: './actionbuttons.component.html',
 })
 export class ActionbuttonsComponent {
+  params: any;
   constructor(private dialog: MatDialog) {}
 
-  params: any;
   agInit(params: ICellRendererParams): void {
     this.params = params;
   }
@@ -21,7 +21,20 @@ export class ActionbuttonsComponent {
   }
 
   edit() {
-    this.dialog.open(TaskFormDialogComponent, { width: '100px', data: '' });
+    console.log(this.params);
+    this.dialog.open(TaskFormDialogComponent, {
+      width: '600px',
+      height: '600 px',
+      data: {
+        title: this.params.data.title,
+        description: this.params.data.description,
+        email: this.params.data.assignedTo.email,
+        id: this.params.data.assignedTo._id,
+        taskId:this.params.data._id,
+        deadline:this.params.data.deadline,
+        edit:true
+      },
+    });
   }
 
   delete() {

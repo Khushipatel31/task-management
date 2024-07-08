@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +14,8 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
 import { ActionbuttonsComponent } from '../../components/common/actionbuttons/actionbuttons.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MatSelectModule } from '@angular/material/select';
-
+import { CommonModule } from '@angular/common';
+import { TaskFormDialogComponent } from './components/task-form-dialog/task-form-dialog.component';
 
 
 @NgModule({
@@ -23,21 +23,21 @@ import { MatSelectModule } from '@angular/material/select';
    HeaderComponent,
    DashboardComponent,
    DeleteDialogComponent,
-   ActionbuttonsComponent
+   ActionbuttonsComponent,
+   TaskFormDialogComponent
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
+    MatFormFieldModule,
     AdminRoutingModule,
     AgGridAngular,
-    MatSelectModule,
     MatInputModule,
+    MatSelectModule,
     FormsModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatDialogModule,
-    FormsModule,
-    MatFormField,
-    ReactiveFormsModule
+    // MatFormField,
   ],
 })
 export class AdminModule {}

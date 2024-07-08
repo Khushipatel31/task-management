@@ -46,7 +46,6 @@ export class DashboardComponent implements OnInit{
       field: 'deadline',
       filter: true,
       valueFormatter: (p: any) => {
-        console.log(p);
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
     },
@@ -69,7 +68,15 @@ export class DashboardComponent implements OnInit{
   }
 
   createTask(){
-      this.dialog.open(TaskFormDialogComponent,{ width: '600px',height:'600 px', data: '' });
+      this.dialog.open(TaskFormDialogComponent,{ width: '600px',height:'600 px', data: {
+        title: '',
+        description: '',
+        email: '',
+        id:'',
+        taskId:'',
+        deadline:'',
+        edit:false
+      }, });
   }
 
 }

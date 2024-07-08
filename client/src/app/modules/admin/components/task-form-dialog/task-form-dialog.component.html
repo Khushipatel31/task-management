@@ -1,7 +1,7 @@
 <div class="flex justify-center items-center py-16 bg-gray-100">
-  <div class="w-full max-w-md p-6 bg-white rounded-lg  shadow-md">
+  <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
     <div class="text-3xl text-center text-darkBlue font-semibold mb-6">Task Form</div>
-    <form class="space-y-4">
+    <form class="space-y-4" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-600">Title</label>
         <input
@@ -22,13 +22,13 @@
         ></textarea>
       </div>
       <div>
-        <label for="user" class="block text-sm font-medium text-gray-600">Select User</label>
+        <label for="assignedTo" class="block text-sm font-medium text-gray-600">Select User</label>
         <select
-          id="user"
-          formControlName="user"
+          id="assignedTo"
+          formControlName="assignedTo"
           class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
-          <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+          <option *ngFor="let user of users"   [value]="user._id">{{ user.name }}</option>
         </select>
       </div>
       <div>
@@ -44,7 +44,7 @@
       <button
         type="submit"
         [disabled]="loading"
-        class="w-full py-2 px-4 bg-darkBlue text-white rounded-md hover:bg-white hover:text-darkBlue hover:border-darkBlue hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
+        class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-white hover:text-darkBlue hover:border-darkBlue hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
       >
         {{ loading ? 'Submitting...' : 'Submit' }}
       </button>

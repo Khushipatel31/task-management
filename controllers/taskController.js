@@ -26,14 +26,14 @@ const addTask = catchAsyncErrors(async (req, res, next) => {
 const updateTask = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     console.log(req.body)
-    const { title, description, isCompleted ,assignedTo} = req.body;
+    const { title, description, isCompleted ,assignedTo,deadline} = req.body;
     if (!title || !description) {
         return next(new CustomHttpError(400, "Please enter all data"));
     }
     try {
         const updatedtask = await tasks.findByIdAndUpdate(
             id,
-            { title, description, isCompleted, assignedTo },
+            { title, description, isCompleted, assignedTo,deadline },
             { new: true }
         );
         if (!updatedtask) {

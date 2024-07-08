@@ -28,6 +28,7 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     MatSelectModule,
     MatTableModule,
+    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule

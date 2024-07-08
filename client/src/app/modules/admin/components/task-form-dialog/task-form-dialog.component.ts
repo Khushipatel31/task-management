@@ -1,48 +1,84 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminServices } from '../../../../services/admin.services';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-task-form-dialog',
   templateUrl: './task-form-dialog.component.html',
-  styleUrl: './task-form-dialog.component.css',
+  styleUrls: ['./task-form-dialog.component.css'],
 })
 export class TaskFormDialogComponent implements OnInit {
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
-  errorMessage = signal('');
-  data: Object = {};
   id: string = '';
   users: any = [];
-  loading:Boolean=false;
-  error:string=''
-  constructor(private adminServices: AdminServices) {}
-  ngOnInit(): void {
+  loading: Boolean = false;
+  error: string = '';
+
+  taskForm!: FormGroup;
+
+  readonly dialogRef = inject(MatDialogRef<TaskFormDialogComponent>);
+  readonly data = inject<any>(MAT_DIALOG_DATA);
+
+  constructor(
+    private adminServices: AdminServices,
+    private formBuilder: FormBuilder
+  ) {
     this.adminServices.getUsers().subscribe((data) => {
-      this.users = data;
+      this.users = data.allUsers;
     });
+
+
+    this.taskForm = this.formBuilder.group({
+      title: [this.data?.title || '', Validators.required],
+      description: [this.data?.description || '', Validators.required],
+      deadline: [
+        this.getDateFromString(this.data?.deadline) || '',
+        Validators.required,
+      ],
+      assignedTo: [this.data?.id||'', Validators.required],
+    });
+
   }
 
-  // for edit
-  //   {
-  //     "title":"task4 updated",
-  //     "description":"this is task5",
-  //     "isCompleted":"0",
-  //     "assignedTo":"6672d68464253085c5a9b0b0",
-  //     "deadline":"2024-10-01T17:00:00.000Z"
-  // }
+  ngOnInit(): void {}
 
-  //for post
-  //   {
-  //     "title": "testtttt",
-  //     "description": "task 4",
-  //     "userId": "6672d68464253085c5a9b0b0",
-  //     "deadline": "2024-07-31T17:00:00.000Z"
-  // }
+  onSubmit() {
+    if (this.taskForm.invalid) {
+      return;
+    }
 
-  edit() {
-    this.adminServices.editTask(this.id, this.data).subscribe((data) => {});
+    this.loading = true;
+
+    const taskData = this.taskForm.value;
+
+    if (this.data.edit) {
+      this.adminServices.editTask(this.data.taskId, taskData).subscribe({
+        next: () => {
+          this.loading = false;
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          this.loading = false;
+          this.error = err.message || 'An error occurred';
+        },
+      });
+    } else {
+      taskData.userId=taskData.assignedTo;
+      this.adminServices.createTask(taskData).subscribe({
+        next: () => {
+          this.loading = false;
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          this.loading = false;
+          this.error = err.message || 'An error occurred';
+        },
+      });
+    }
   }
-
-  create() {
-    this.adminServices.createTask(this.data).subscribe((data) => {});
+  private getDateFromString(dateString: string): string {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toISOString().substring(0, 10);
   }
 }
