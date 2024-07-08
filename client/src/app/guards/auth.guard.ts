@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, createUrlTreeFromSnapshot } from '@angular/router';
 import { HttpServices } from '../services/http.service';
-import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, map, Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { AdminServices } from '../services/admin.services';
 import { UserService } from '../services/user.services';

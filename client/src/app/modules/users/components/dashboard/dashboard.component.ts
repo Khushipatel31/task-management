@@ -1,9 +1,7 @@
-import { OnInit } from '@angular/core';
+import { OnInit ,Component} from '@angular/core';
 import { UserService } from '../../../../services/user.services';
-import { Component } from '@angular/core';
-import { ColDef, ValueFormatterParams } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 import { ButtonComponent } from '../../../../components/common/button/button.component';
-import { param } from 'jquery';
 import { DatePipe } from '@angular/common';
 
 interface Task {
@@ -46,7 +44,6 @@ export class DashboardComponent implements OnInit {
       field: 'deadline',
       filter: true,
       valueFormatter: (p:any) => {
-        console.log(p)
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
     },

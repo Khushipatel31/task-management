@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
-import { UserService } from '../../../services/user.services';
 import { DialogComponent } from '../../../modules/users/components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -10,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './button.component.html',
 })
 export class ButtonComponent implements ICellRendererAngularComp {
-  constructor(private userService: UserService,private dialog:MatDialog ) {}
+  constructor(private dialog:MatDialog ) {}
 
   params: any;
   agInit(params: ICellRendererParams): void {

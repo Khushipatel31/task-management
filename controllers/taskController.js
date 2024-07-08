@@ -25,14 +25,15 @@ const addTask = catchAsyncErrors(async (req, res, next) => {
 //updating task
 const updateTask = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
-    const { title, description, isCompleted } = req.body;
+    console.log(req.body)
+    const { title, description, isCompleted ,assignedTo} = req.body;
     if (!title || !description) {
         return next(new CustomHttpError(400, "Please enter all data"));
     }
     try {
         const updatedtask = await tasks.findByIdAndUpdate(
             id,
-            { title, description, isCompleted },
+            { title, description, isCompleted, assignedTo },
             { new: true }
         );
         if (!updatedtask) {
@@ -110,7 +111,7 @@ const adminGetTasks = catchAsyncErrors(async (req, res, next) => {
         const taskDeadline = new Date(task.deadline).getTime();
         const currentTime = Date.now();
         let status;
-        
+
         if (task.isCompleted === 1) {
             status = "completed";
             completedCount++;
