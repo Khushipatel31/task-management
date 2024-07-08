@@ -15,7 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
@@ -28,13 +29,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatSelectModule,
     MatTableModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule
   ],
   providers: [
     AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimationsAsync(),
+    DatePipe
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

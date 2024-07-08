@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from './http.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-
 interface Task {
   _id: string;
   title: string;
@@ -24,9 +23,23 @@ export class UserService {
     this.nameSubject.next(name);
   }
 
+  updateStatus(id:String){
+    return this.http.putMethod(`/task/updateStatus/${id}`,{})
+  }
+
+
   getTasks() {
     return this.http.getMethod('/getMyTasks').pipe(
         map((data:any)=>{
+            data.pendingTasks.forEach((ele:any,ind:any)=>{
+              ele.index=ind+1;
+            })
+            data.completedTasks.forEach((ele:any,ind:any)=>{
+              ele.index=ind+1;
+            })
+            data.expiredTasks.forEach((ele:any,ind:any)=>{
+              ele.index=ind+1;
+            })
             return data;
         }
     ));

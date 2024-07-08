@@ -22,6 +22,4 @@ router
   .route("/task/updateStatus/:id")
   .put(isAuthenticatedUser, taskController.updateStatus);
 
-
-
 module.exports = router;

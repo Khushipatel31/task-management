@@ -1,11 +1,10 @@
 import { OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.services';
-import { MatSelectChange } from '@angular/material/select';
-import { BehaviorSubject } from 'rxjs';
 import { Component } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { ButtonComponent } from '../../../../components/common/button/button.component';
+import { param } from 'jquery';
+import { DatePipe } from '@angular/common';
 
 interface Task {
   _id: string;
@@ -21,11 +20,11 @@ interface Task {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   loading: boolean = false;
   pendingTasks: Task[] = [];
-  start: any = 0;
   completedTasks: Task[] = [];
   expiredTasks: Task[] = [];
   status = 'pending';
@@ -33,34 +32,34 @@ export class DashboardComponent implements OnInit {
   currentTasks: Task[] = [];
   colDefs: ColDef[] = [];
   pagination = true;
-  paginationPageSize = 1;
+  paginationPageSize = 20;
   paginationPageSizeSelector = [20, 50, 100];
   attributes: ColDef[] = [
     {
       field: 'index',
       filter: true,
-      valueGetter: () => {
-        this.start++;
-        console.log(this.start);
-      },
-      // valueSetter: (start) => {
-      //   return this.start++ + '';
-      // },
+      flex: 0.5,
     },
     { field: 'title', filter: true },
-    { field: 'description', filter: true },
-    { field: 'deadline', filter: true },
+    { field: 'description', filter: true, flex: 1 },
+    {
+      field: 'deadline',
+      filter: true,
+      valueFormatter: (p:any) => {
+        console.log(p)
+        return this.datepipe.transform(p.value, 'shortDate') + '';
+      },
+    },
   ];
-  constructor(private userService: UserService) {}
+
+  constructor(private userService: UserService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.userService.getTasks().subscribe(
       (data: any) => {
         this.pendingTasks = data.pendingTasks;
         this.completedTasks = data.completedTasks;
         this.expiredTasks = data.expiredTasks;
-        this.currentTasks = data.pendingTasks;
         this.rowData = data.pendingTasks;
-        this.start = 0;
         this.colDefs = this.attributes.slice();
         this.colDefs.push({
           field: 'markAsComplete',
@@ -76,22 +75,19 @@ export class DashboardComponent implements OnInit {
   }
 
   onStatusChange(status: any): void {
-    this.status = status.target.value;
+    this.status = status.value;
     if (this.status === 'expired') {
       this.rowData = this.expiredTasks;
-      this.start = 0;
       this.colDefs = this.attributes.slice();
     } else if (this.status === 'completed') {
       this.rowData = this.completedTasks;
-      this.start = 0;
       this.colDefs = this.attributes.slice();
     } else {
       this.rowData = this.pendingTasks;
-      this.start = 0;
 
       this.colDefs = this.attributes.slice();
       this.colDefs.push({
-        field: 'markAsComplete',
+        field: 'markAsCompleted',
         cellRenderer: ButtonComponent,
       });
     }

@@ -1,17 +1,28 @@
 import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
+import { UserService } from '../../../services/user.services';
+import { DialogComponent } from '../../../modules/users/components/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
 })
 export class ButtonComponent implements ICellRendererAngularComp {
-  agInit(params: ICellRendererParams): void {}
+  constructor(private userService: UserService,private dialog:MatDialog ) {}
+
+  params: any;
+  agInit(params: ICellRendererParams): void {
+    this.params = params;
+  }
   refresh(params: ICellRendererParams) {
+    this.params = params;
     return true;
   }
   buttonClicked() {
-    alert('clicked');
+    this.dialog.open(DialogComponent, { width: '250px', data: this.params.data._id });
   }
+  
+
 }
