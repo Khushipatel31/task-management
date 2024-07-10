@@ -20,7 +20,7 @@ export class ButtonComponent implements ICellRendererAngularComp {
     return true;
   }
   buttonClicked() {
-    this.dialog.open(DialogComponent, { width: '250px', data: this.params.data._id });
+    this.dialog.open(DialogComponent, { width: '500px', data: this.params.data._id });
   }
   
 

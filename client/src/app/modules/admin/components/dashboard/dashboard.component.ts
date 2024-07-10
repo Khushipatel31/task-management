@@ -35,16 +35,16 @@ export class DashboardComponent implements OnInit{
     {
       field: 'index',
       filter: true,
-      flex: 0.5,
-    },
-    { field: 'username', filter: true },
-    { field: 'email', filter: true },
-    { field: 'title', filter: true },
-    { field: 'status', filter: true },
-    { field: 'description', filter: true, flex: 1 },
+      flex:0.5    },
+    { field: 'username', filter: true,flex:1 },
+    { field: 'email', filter: true ,flex:1},
+    { field: 'title', filter: true,flex:1 },
+    { field: 'status', filter: true,flex:0.8 },
+    { field: 'description', filter: true,flex:1 },
     {
       field: 'deadline',
       filter: true,
+      flex:0.8,
       valueFormatter: (p: any) => {
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },

@@ -12,13 +12,14 @@ import { AuthInterceptor } from './guards/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSelectModule } from '@angular/material/select';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { NotifyComponent } from './components/common/notify/notify.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent,NotifyComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,7 +32,7 @@ import { DatePipe } from '@angular/common';
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     AuthService,

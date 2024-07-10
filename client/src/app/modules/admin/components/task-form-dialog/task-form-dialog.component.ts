@@ -2,6 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminServices } from '../../../../services/admin.services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NotifyComponent } from '../../../../components/common/notify/notify.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-form-dialog',
@@ -21,12 +24,13 @@ export class TaskFormDialogComponent implements OnInit {
 
   constructor(
     private adminServices: AdminServices,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar:MatSnackBar,
+    private router:Router
   ) {
     this.adminServices.getUsers().subscribe((data) => {
       this.users = data.allUsers;
     });
-
 
     this.taskForm = this.formBuilder.group({
       title: [this.data?.title || '', Validators.required],
@@ -35,20 +39,19 @@ export class TaskFormDialogComponent implements OnInit {
         this.getDateFromString(this.data?.deadline) || '',
         Validators.required,
       ],
-      assignedTo: [this.data?.id||'', Validators.required],
+      assignedTo: [this.data?.id || '', Validators.required],
     });
-
   }
 
   ngOnInit(): void {}
 
   onSubmit() {
     if (this.taskForm.invalid) {
+      this.error='Please enter all details properly'
       return;
     }
 
     this.loading = true;
-
     const taskData = this.taskForm.value;
 
     if (this.data.edit) {
@@ -56,6 +59,11 @@ export class TaskFormDialogComponent implements OnInit {
         next: () => {
           this.loading = false;
           this.dialogRef.close(true);
+          this._snackBar.openFromComponent(NotifyComponent, {
+            duration: 5 * 1000,
+            data: 'Task edited Successfully!!',
+          });
+          this.router.navigate(['']);
         },
         error: (err) => {
           this.loading = false;
@@ -63,11 +71,16 @@ export class TaskFormDialogComponent implements OnInit {
         },
       });
     } else {
-      taskData.userId=taskData.assignedTo;
+      taskData.userId = taskData.assignedTo;
       this.adminServices.createTask(taskData).subscribe({
         next: () => {
           this.loading = false;
           this.dialogRef.close(true);
+          this._snackBar.openFromComponent(NotifyComponent, {
+            duration: 5 * 1000,
+            data: 'Task added Successfully!!',
+          });
+          this.router.navigate(['']);
         },
         error: (err) => {
           this.loading = false;

@@ -35,7 +35,7 @@ export class LoginComponent  {
 
   onFormSubmit() {
     if (this.loginForm.invalid) {
-      this.error = 'Please fill this form properly';
+      this.error = 'Please fill the form properly';
       return;
     }
     if (this.loginForm.valid) {

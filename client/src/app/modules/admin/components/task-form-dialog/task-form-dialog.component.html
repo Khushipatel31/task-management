@@ -1,6 +1,6 @@
 <div class="flex justify-center items-center py-16 bg-gray-100">
   <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-    <div class="text-3xl text-center text-darkBlue font-semibold mb-6">Task Form</div>
+    <div class="text-3xl text-center text-[#002D62] font-semibold mb-6">Task Form</div>
     <form class="space-y-4" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-600">Title</label>
@@ -9,6 +9,11 @@
           id="title"
           formControlName="title"
           placeholder="Enter task title"
+          [ngClass]="{
+            'border-red-500':
+              taskForm.get('title')?.errors &&
+              (taskForm.get('title')?.dirty || taskForm.get('title')?.touched)
+          }"
           class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
         />
       </div>
@@ -18,6 +23,11 @@
           id="description"
           formControlName="description"
           placeholder="Enter task description"
+          [ngClass]="{
+            'border-red-500':
+              taskForm.get('description')?.errors &&
+              (taskForm.get('description')?.dirty || taskForm.get('description')?.touched)
+          }"
           class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
         ></textarea>
       </div>
@@ -26,6 +36,11 @@
         <select
           id="assignedTo"
           formControlName="assignedTo"
+          [ngClass]="{
+            'border-red-500':
+              taskForm.get('assignedTo')?.errors &&
+              (taskForm.get('assignedTo')?.dirty || taskForm.get('assignedTo')?.touched)
+          }"
           class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           <option *ngFor="let user of users"   [value]="user._id">{{ user.name }}</option>
@@ -37,6 +52,11 @@
           type="date"
           id="deadline"
           formControlName="deadline"
+          [ngClass]="{
+            'border-red-500':
+              taskForm.get('deadline')?.errors &&
+              (taskForm.get('deadline')?.dirty || taskForm.get('deadline')?.touched)
+          }"
           class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300"
         />
       </div>
@@ -44,7 +64,7 @@
       <button
         type="submit"
         [disabled]="loading"
-        class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-white hover:text-darkBlue hover:border-darkBlue hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
+        class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:text-darkBlue hover:border-darkBlue hover:border-1 focus:outline-none focus:ring focus:border-blue-300"
       >
         {{ loading ? 'Submitting...' : 'Submit' }}
       </button>

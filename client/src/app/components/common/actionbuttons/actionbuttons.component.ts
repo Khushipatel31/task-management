@@ -39,7 +39,7 @@ export class ActionbuttonsComponent {
 
   delete() {
     this.dialog.open(DeleteDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: this.params.data._id,
     });
   }
